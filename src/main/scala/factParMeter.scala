@@ -53,22 +53,27 @@ object FactParMeter extends App {
 
     private val THRESHOLD = 100
 
-    case class BigIntAgg(val n:BigInt, var r:Int=1) {
 
-      def +=(x:Int):BigIntAgg =
+      type BigIntLong = (BigInt, Long)
+
+      def sop(x:BigIntLong, p:Long): BigIntLong ={
+        val (n,r) = x
         if (r > (1<<32))
-          BigIntAgg(n*r, x)
+          (n*r, p)
         else
-          BigIntAgg(n, r*x)
+          (n, r*p)
+      }
 
-      def toBigInt:BigInt = n*r
+      def pop(x:BigIntLong, y:BigIntLong):BigIntLong = {
+        val (xn, xr) = x
+        val (yn, yr) = y
+        ((xn*xr)*(yn*yr), 1)
+      }
 
-      def *(that:BigIntAgg) = new BigIntAgg(this.n*that.n*(this.r*that.r))
 
-    }
 
     def prod(start:Int, end:Int):BigInt =
-      (start until end).par.aggregate(BigIntAgg(1))(_ += _, _ * _).toBigInt
+      (start.toLong until end).par.aggregate((BigInt(1),1L))(sop, pop)._1
 
   }
 
@@ -99,16 +104,24 @@ object FactParMeter extends App {
   val N:Int = 100000
   var res1=BigInt(0)
   var res2=BigInt(0)
-  val tFactPar = measure{
+  val tFactPar = config(
+    Key.exec.benchRuns -> 20,
+    Key.verbose -> true
+  ) withWarmer {
+    new Warmer.Default
+  } measure{
     res1=FactPar(N)
   }
-  val tFactParAgg = measure{
+  val tFactParAgg = config(
+    Key.exec.benchRuns -> 20,
+    Key.verbose -> true
+  ) withWarmer {
+    new Warmer.Default
+  } measure{
     res2=FactParAgg(N)
   }
 
-  println(s"Parallel:   $tFactPar")
-  println(s"Parallel:   $tFactParAgg")
-  println(res1==res2)
-  //println(res1)
-  //println(res2)
+  println(s"Parallel recursive:      $tFactPar")
+  println(s"Parallel with aggregate: $tFactParAgg")
+  assert(res1==res2, "Factorial results are different")
 }

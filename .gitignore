@@ -20,3 +20,9 @@ project/plugins/project/
 .cache-main
 .classpath
 .settings/
+
+.ensime
+.ensime_cache
+.metals
+.bloop
+.bsp

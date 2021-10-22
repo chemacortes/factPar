@@ -21,8 +21,6 @@ project/plugins/project/
 .classpath
 .settings/
 
-.ensime
-.ensime_cache
 .metals
 .bloop
 .bsp

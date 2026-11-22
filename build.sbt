@@ -1,6 +1,7 @@
-//ThisBuild / scalaVersion := "2.11.8"
-ThisBuild / scalaVersion := "2.12.15"
+ThisBuild / scalaVersion := "3.5.2"
+ThisBuild / semanticdbEnabled := true
 
-//libraryDependencies += "com.storm-enroute" %% "scalameter" % "0.8.2"
-
-libraryDependencies += "com.storm-enroute" %% "scalameter-core" % "0.19"
+libraryDependencies ++= Seq(
+  "io.github.hughsimpson" %% "scalameter" % "0.22.1",
+  "org.scala-lang.modules" %% "scala-parallel-collections" % "1.3.0"
+)

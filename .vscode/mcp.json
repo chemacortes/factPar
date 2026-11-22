@@ -1,0 +1,8 @@
+{
+  "servers": {
+    "factPar-metals": {
+      "url": "http://localhost:39221/mcp",
+      "type": "http"
+    }
+  }
+}

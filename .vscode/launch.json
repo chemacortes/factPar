@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "scala",
+      "request": "launch",
+      "name": "FactParMeter",
+      "mainClass": "FactParMeter",
+      "buildTarget": "file:/mnt/ssd/works/scalaWS/factPar/?id=factpar",
+      "args": [],
+      "jvmOptions": [],
+      "env": {}
+    }
+  ]
+}

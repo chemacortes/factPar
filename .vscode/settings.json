@@ -1,5 +1,8 @@
 {
   "files.watcherExclude": {
-    "**/target": true
+    "**/target/**": true
+  },
+  "chat.tools.terminal.autoApprove": {
+    "unzip": true
   }
 }
